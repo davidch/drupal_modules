@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * Implementation of hook_schema()
+ */
+function og_menu_schema() {
+  $schema['og_menu'] = array(
+    'fields' => array(
+      'gid' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'menu_name' => array(
+        'type' => 'varchar',
+        'length' => 128,
+        'default' => '',
+      ),
+    ),
+    'primary key' => array('gid', 'menu_name'),
+  );
+  return $schema;
+}
+
+/**
+ * Implementation of hook_uninstall.
+ * Deletes menus that were created through og_menu
+ */
+function og_menu_uninstall() {
+  variable_del('og_menu_block_links');
+  variable_del('og_menu_max_menus_per_group');
+
+  // @todo Decide whether we want to delete all menu's created by og_menu.
+}
